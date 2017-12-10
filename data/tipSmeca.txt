@@ -1,0 +1,3 @@
+0,Hemijski otpad,5
+1,Komunalni otpad,2
+2,Reciklazni otpad,3

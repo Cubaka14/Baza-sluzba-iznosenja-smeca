@@ -1,0 +1,16 @@
+0,Nemanja,Antic,100000,25,21,21.10.2010.
+1,Aleksandra,Antic,90000,25,18,25.5.2005.
+2,Andrijana,Damjanovic,80000,24,21,13.9.2010.
+3,Andrijana,Rakic,70000,24,21,13.9.2010.
+4,Goran,Damjanovic,80000,24,21,13.9.2012.
+5,Minja,Aleksic,65000,24,15,13.9.2012.
+6,Aleksa,Markovic,200000,25,13,13.9.2013.
+7,Mateja,Ruzic,45000,24,21,13.9.2013.
+8,Salmir,Beker,25000,24,21,13.9.2013.
+9,Senad,Sulejman,25000,24,21,13.9.2011.
+10,Asim,Murina,25000,24,21,13.9.2011.
+11,Djordje,Dragic,38000,24,21,13.9.2011.
+12,Dragan,Cukic,38000,24,21,13.9.2011.
+13,Ljubomir,Despic,38000,24,21,13.9.2011.
+14,Stefan,Jovanovic,25000,24,21,13.9.2010.
+15,Dragan,Danilovic,25000,24,21,13.9.2010.
