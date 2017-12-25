@@ -1,4 +1,4 @@
-use sluzbaIznosenjaSmeca;
+use mydb;
 
 LOAD DATA LOCAL INFILE'data/zaposleni.txt' INTO TABLE Zaposleni
   FIELDS TERMINATED BY ',';
@@ -18,9 +18,20 @@ LOAD DATA LOCAL INFILE'data/klijent.txt' INTO TABLE Klijent
 LOAD DATA LOCAL INFILE'data/zahtevi.txt' INTO TABLE Zahtev
   FIELDS TERMINATED BY ',';  
 
-LOAD DATA LOCAL INFILE'data/poslovi.txt' INTO TABLE Poslovi
-  FIELDS TERMINATED BY ',';  
-
 LOAD DATA LOCAL INFILE'data/koordinator.txt' INTO TABLE Koordinator
-  FIELDS TERMINATED BY ',';  
+  FIELDS TERMINATED BY ',';
 
+LOAD DATA LOCAL INFILE'data/poslovi.txt' INTO TABLE Poslovi
+  FIELDS TERMINATED BY ',';
+  
+LOAD DATA LOCAL INFILE'data/radnik.txt' INTO TABLE Radnik
+  FIELDS TERMINATED BY ',';
+  
+LOAD DATA LOCAL INFILE'data/kamion.txt' INTO TABLE Kamion
+  FIELDS TERMINATED BY ',';
+  
+LOAD DATA LOCAL INFILE'data/vozac.txt' INTO TABLE Vozac
+  FIELDS TERMINATED BY ',';
+
+
+  
