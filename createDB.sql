@@ -338,7 +338,15 @@ DROP TRIGGER IF EXISTS `mydb`.`Poslovi_BEFORE_INSERT` $$
 USE `mydb`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `mydb`.`Poslovi_BEFORE_INSERT` BEFORE INSERT ON `Poslovi` FOR EACH ROW
 BEGIN
-	DECLARE msg VARCHAR(255); 
+	DECLARE msg VARCHAR(255);
+	IF NOT EXISTS(SELECT *
+	    FROM Zahtev z,Koordinator k
+	    WHERE z.TipSmeca_idTipSmeca=k.TipSmeca_idTipSmeca AND new.Koordinator_Zaposleni_idZaposleni=k.Zaposleni_idZaposleni
+	    	 and new.Zahtev_idZahtev = z.idZahtev)
+	    THEN
+	    	SET msg='Greska: Ovaj koordinator nije zaduzen za tu vrstu otpada!';
+        SIGNAL sqlstate '45000' SET message_text= msg;
+	END IF;
 END$$
 
 
