@@ -2,7 +2,8 @@ CC  	= gcc
 CCLIBS	= `mysql_config --cflags --libs`
 CCFLAGS	= -Wall -g
 PROGRAM	= Sluzba
-OBJ 	= main.o
+OBJ 	= main.o \
+		apps.o
 DIR	= mysql-C
 PROGS	= Sluzba
 
