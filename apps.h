@@ -11,7 +11,7 @@
 #define BUFFER_SIZE 80
 
 void app_upravnik(MYSQL *konekcija,char * idUpravnika);
-void app_koordinator(MYSQL *konekcija);
+void app_koordinator(MYSQL *konekcija, char * idKoordinatora);
 void app_klijent(MYSQL *konekcija);
 void app_dispecer(MYSQL *konekcija,char* idDispecera);
 void app_radnik(MYSQL *konekcija);

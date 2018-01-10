@@ -139,9 +139,98 @@ void app_upravnik(MYSQL *konekcija,char* idUpravnika){
         }
     }
 }
-void app_koordinator(MYSQL *konekcija){
-    printf("app_koordinator\n");
+void app_koordinator(MYSQL *konekcija,char * idKoordinatora){
+    MYSQL_RES *rezultat;	/* Promenljiva za rezultat. */
+    MYSQL_ROW red;	        /* Promenljiva za jedan red rezultata. */
+    MYSQL_FIELD *polje;	        /* Promenljiva za nazive kolona. */
+    int i;		        /* Brojac u petljama. */
+    int broj;		        /* Pomocna promenljiva za broj kolona. */	
+    char query[QUERY_SIZE];	/* Promenljiva za formuaciju upita. */
+    char buffer[BUFFER_SIZE];	/* Velicina poruke koja se ucitava sa ulaza. */
+
+    /* Incijalizuje se promenljiva koja ce predstavljati konekciju. */
+    konekcija = mysql_init (NULL);
+    /* Pokusava se sa konektovanjem na bazu. */
+    if (mysql_real_connect
+                (konekcija, "localhost", "root", "root", "mydb", 0, NULL,
+                0) == NULL)
+        error_fatal ("Greska u konekciji. %s\n", mysql_error (konekcija));
     
+    int izlaz=0;
+    while(!izlaz){
+        printf("--------------------------------------\n");
+        printf("Izaberite neku od funkcionalnosti:\n");
+        printf("Vidi sve tvoje poslove (KEY:1)\n");
+        printf("Organizuj posao (KEY:2)\n");
+        printf("Odgovori na status posla (KEY:3)\n");
+        printf("log out (KEY:4)\n");
+        printf("--------------------------------------\n");
+    
+        int komanda;
+        scanf("%d",&komanda);
+        switch(komanda){
+            case 1:{
+                sprintf(query,"select * from Poslovi where Koordinator_Zaposleni_idZaposleni='%s'",idKoordinatora);
+                
+                /* Pokusava se sa izvrsavanjem upita. */
+                if (mysql_query (konekcija, query) != 0)
+                    error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+
+                /* Preuzima se rezultat. */
+                rezultat = mysql_use_result (konekcija);
+
+                /* Ispisuje se zaglavlje kolone. */
+                polje = mysql_fetch_field (rezultat);
+                
+                /* Racuna se broj kolona. */
+                broj = mysql_num_fields (rezultat);
+
+                for (i = 0; i < broj; i++)
+                    printf ("%s\t", polje[i].name);
+                printf ("\n");
+                
+                /* Ispisuju se vrednosti. */
+                while ((red = mysql_fetch_row (rezultat)) != 0){
+                    for (i = 0; i < broj; i++)
+                        printf ("%s\t", red[i]);
+                    printf ("\n");
+                }
+                
+                
+                /* Oslobadja se trenutni rezultat, posto nam vise ne treba. */
+                mysql_free_result (rezultat);
+            }
+                break;
+            case 2:{
+                
+            }
+                break;
+            case 3:{
+                int id;
+                char odgovor[200];
+                int zavrseno;
+                printf("Unesite id Zahtevanog posla:");
+                scanf("%d",&id);
+                getchar();
+                printf("Unesite odgovor posla:");
+                gets(odgovor);
+                printf("Unesite da li je posao zavrsen ili ne (DA:1/NE:0):");
+                scanf("%d",&zavrseno);
+                sprintf(query,"update Poslovi set odgovorKoordinatora='%s', statusPosla='%d' where Zahtev_idZahtev='%d' and Koordinator_Zaposleni_idZaposleni='%s'",odgovor,zavrseno,id,idKoordinatora);
+                
+                /* Pokusava se sa izvrsavanjem upita. */
+                if (mysql_query (konekcija, query) != 0)
+                    error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+                printf("Uspesno ste odgovorili na zahtev id:%d\n\n",id);
+            }
+                break;
+            case 4:{
+                printf("Izlogovani ste!");
+                izlaz=1;
+            }
+                break;
+        }
+    }
 }
 void app_klijent(MYSQL *konekcija){
     printf("app_klijent\n");

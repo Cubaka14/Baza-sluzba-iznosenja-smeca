@@ -67,7 +67,7 @@ int main (int argc, char **argv)
         }
         else if(!strcmp(red[8],"koordinator"))
         {
-            app_koordinator(konekcija);
+            app_koordinator(konekcija,red[0]);
         }
         else if(!strcmp(red[8],"klijent"))
         {
