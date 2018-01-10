@@ -202,6 +202,117 @@ void app_koordinator(MYSQL *konekcija,char * idKoordinatora){
             }
                 break;
             case 2:{
+                int z_posao =0;
+                while(!z_posao){
+                    printf("--------------------------------------\n");
+                    printf("Izaberite neku od funkcionalnosti:\n");
+                    printf("Vidi sve dostupne vozace(KEY:1)\n");
+                    printf("Vidi sve dostupne radnike(KEY:2)\n");
+                    printf("Organizuj(KEY:3)\n");
+                    printf("Izadji(KEY:4)\n");
+                    printf("--------------------------------------\n");
+                    int opcija;
+                    scanf("%d",&opcija);
+                    switch(opcija){
+                        case 1:{
+                            sprintf(query,"select * from Vozac where zauzet=0");
+                            
+                            /* Pokusava se sa izvrsavanjem upita. */
+                            if (mysql_query (konekcija, query) != 0)
+                                error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+
+                            /* Preuzima se rezultat. */
+                            rezultat = mysql_use_result (konekcija);
+
+                            /* Ispisuje se zaglavlje kolone. */
+                            polje = mysql_fetch_field (rezultat);
+                            
+                            /* Racuna se broj kolona. */
+                            broj = mysql_num_fields (rezultat);
+
+                            for (i = 0; i < broj; i++)
+                                printf ("%s\t", polje[i].name);
+                            printf ("\n");
+                            
+                            /* Ispisuju se vrednosti. */
+                            while ((red = mysql_fetch_row (rezultat)) != 0){
+                                for (i = 0; i < broj; i++)
+                                    printf ("%s\t", red[i]);
+                                printf ("\n");
+                            }
+                        }
+                            break;
+                        case 2:{
+                            sprintf(query,"select * from Radnik where zauzet=0");
+                            
+                            /* Pokusava se sa izvrsavanjem upita. */
+                            if (mysql_query (konekcija, query) != 0)
+                                error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+
+                            /* Preuzima se rezultat. */
+                            rezultat = mysql_use_result (konekcija);
+
+                            /* Ispisuje se zaglavlje kolone. */
+                            polje = mysql_fetch_field (rezultat);
+                            
+                            /* Racuna se broj kolona. */
+                            broj = mysql_num_fields (rezultat);
+
+                            for (i = 0; i < broj; i++)
+                                printf ("%s\t", polje[i].name);
+                            printf ("\n");
+                            
+                            /* Ispisuju se vrednosti. */
+                            while ((red = mysql_fetch_row (rezultat)) != 0){
+                                for (i = 0; i < broj; i++)
+                                    printf ("%s\t", red[i]);
+                                printf ("\n");
+                            }
+                        }
+                            break;
+                        case 3:{
+                            int idPosla;
+                            printf("Unesite id posla:");
+                            scanf("%d",&idPosla);
+                            
+                            printf("Unesite broj radnika:");
+                            int brRadnika;
+                            int indeksRadnika;
+                            scanf("%d",&brRadnika);
+                            for(int i=0;i< brRadnika;i++){
+                                printf("id %d. radnika:",i);
+                                scanf("%d",&indeksRadnika);
+                                sprintf(query,"update Radnik set Poslovi_Zahtev_idZahtev='%d', zauzet=1 where Zaposleni_idZaposleni='%d'",idPosla,indeksRadnika);
+                
+                                /* Pokusava se sa izvrsavanjem upita. */
+                                if (mysql_query (konekcija, query) != 0)
+                                    error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+                                printf("Uspesno ste zaposlili radnika id:%d\n\n",indeksRadnika);
+                            }
+                            
+                            printf("Unesite broj Vozaca:");
+                            int brVozaca;
+                            int indeksVozaca;
+                            scanf("%d",&brVozaca);
+                            for(int i=0;i< brVozaca;i++){
+                                printf("id %d. vozaca:",i);
+                                scanf("%d",&indeksVozaca);
+                                sprintf(query,"update Vozac set Poslovi_Zahtev_idZahtev='%d', zauzet=1 where Zaposleni_idZaposleni='%d'",idPosla,indeksRadnika);
+                
+                                /* Pokusava se sa izvrsavanjem upita. */
+                                if (mysql_query (konekcija, query) != 0)
+                                    error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
+                                printf("Uspesno ste zaposlili vozaca id:%d\n\n",indeksVozaca);
+                            }
+                            
+                        }
+                            break;
+                        case 4:{
+                            z_posao=1;
+                        }
+                            break;
+                    }
+                }
                 
             }
                 break;
@@ -221,7 +332,7 @@ void app_koordinator(MYSQL *konekcija,char * idKoordinatora){
                 /* Pokusava se sa izvrsavanjem upita. */
                 if (mysql_query (konekcija, query) != 0)
                     error_fatal ("Greska u upitu %s\n", mysql_error (konekcija));
-                printf("Uspesno ste odgovorili na zahtev id:%d\n\n",id);
+                printf("Uspesno ste odgovorili na status posla id:%d\n\n",id);
             }
                 break;
             case 4:{
